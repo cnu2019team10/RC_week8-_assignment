@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.util.*;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
@@ -35,4 +36,13 @@ public class CrewMemberTest {
         assertThat(crewMemberList.size(), is(6));
         assertThat(crewMemberList, hasSize(6));
     } 	//동아리 회원수가 6명인지 아닌지 확인하는 test
+
+    @Test
+    public void shouldNewmemberIsDaHyun(){
+        Optional<CrewMember> filterCrewMember = crewMemberList.stream().filter(c -> c.getPosition().equals("신입생")).findFirst();
+        String CrewmemberName = filterCrewMember.get().getName();
+        assertTrue(CrewmemberName.equals("다현"));
+        assertThat("다현",is(CrewmemberName));
+        System.out.println("다현이는 신입생이다!");
+    } //다현이가 신입생임을 확인하는 test
 }
