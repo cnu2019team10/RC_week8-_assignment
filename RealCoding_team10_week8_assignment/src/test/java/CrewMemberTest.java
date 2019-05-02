@@ -12,15 +12,15 @@ public class CrewMemberTest {
     private List<CrewMember> crewMemberList = new ArrayList<CrewMember>();
 
     @Before
-    public void setUp(){
+    public void setUp() {
 
         //6개의 동아리 멤버 객체를 만들어줌.
-        CrewMember chairman = new CrewMember("지효","회장", 201502012);
-        CrewMember vicechairman = new CrewMember("채영","부회장", 201502013);
-        CrewMember manager = new CrewMember("정연","총무", 201502014);
-        CrewMember member1 = new CrewMember("나연","회원1", 201802039);
-        CrewMember member2 = new CrewMember("모모","회원2", 201802040);
-        CrewMember newmember = new CrewMember("다현","신입생", 201902039);
+        CrewMember chairman = new CrewMember("지효", "회장", 201502012);
+        CrewMember vicechairman = new CrewMember("채영", "부회장", 201502013);
+        CrewMember manager = new CrewMember("정연", "총무", 201502014);
+        CrewMember member1 = new CrewMember("나연", "회원1", 201802039);
+        CrewMember member2 = new CrewMember("모모", "회원2", 201802040);
+        CrewMember newmember = new CrewMember("다현", "신입생", 201902039);
 
         //동아리멤버 리스트에 각 회원들을 추가해줌.
         crewMemberList.add(chairman);
@@ -30,4 +30,9 @@ public class CrewMemberTest {
         crewMemberList.add(member2);
         crewMemberList.add(newmember);
     }
+    @Test
+    public void CrewMemberCountSix(){
+        assertThat(crewMemberList.size(), is(6));
+        assertThat(crewMemberList, hasSize(6));
+    } 	//동아리 회원수가 6명인지 아닌지 확인하는 test
 }
