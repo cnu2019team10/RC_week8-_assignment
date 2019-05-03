@@ -10,11 +10,12 @@ import service.MockService;
 
 import java.util.*;
 
+import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
-import static org.mockito.BDDMockito.given;
+import static org.mockito.BDDMockito.*;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
@@ -70,11 +71,39 @@ public class CrewMemberTest {
         given(mockRepository.findByName("사나")).willReturn(new CrewMember("사나", "신입생3", 201902423));
         given(mockRepository.findByName("미나")).willReturn(new CrewMember("미나", "회원3", 201802411));
         //when
-        CrewMember crewMember = mockService.findByNmae("쯔위");
-        CrewMember crewMember1 = mockService.findByNmae("사나");
+        CrewMember crewMember = mockService.findByName("쯔위");
+        CrewMember crewMember1 = mockService.findByName("사나");
         //then
         verify(mockRepository, atLeast(2)).findByName(anyString());
         assertThat(crewMember.getName(),is("쯔위"));
         assertThat(crewMember1.getName(), is("사나"));
+    }
+
+    @Test(timeout = 2000)
+    public void testTwiceMembersMockClassBaseOnBDD() {
+//        mockService.updateStudentIDByName("지효",201402001);
+//
+//        assertThat(mockService.findByName("지효").getStudentID(),is(201402001));
+        // @Before 에 보면, 지효가 0번째 index에 들어있어서 그걸 찾아 id 값을 확인함.
+        assertThat(crewMemberList.get(0).getStudentID(),is(201502012));
+
+        //given
+        // 새로 만든걸 찾기
+        given(mockRepository.findByName("다현2")).willReturn(new CrewMember("다현2","사원",201902002));
+        // 기존에 들어있던걸 불러오기
+        given(mockRepository.findByName("지효")).willReturn(crewMemberList.get(0));
+        //Mock로 새 클래스 만들기
+        CrewMember mockMember = mock(CrewMember.class);
+
+        // when
+        CrewMember crewMember = mockRepository.findByName("다현2");
+        when(mockMember.getName()).thenReturn("모키");
+
+        // then
+        assertThat(crewMember.getStudentID(),is(201902002));
+        assertFalse("모키가 아닌 모키모키".equals(mockMember.getName()));
+        assertThat(mockMember.getName(),is("모키"));
+
+
     }
 }
