@@ -1,6 +1,12 @@
 import domain.CrewMember;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
+import repository.MockRepository;
+import service.MockService;
 
 import java.util.*;
 
@@ -8,9 +14,20 @@ import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import static org.mockito.BDDMockito.given;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.verify;
 
+@RunWith(MockitoJUnitRunner.class)
 public class CrewMemberTest {
     private List<CrewMember> crewMemberList = new ArrayList<CrewMember>();
+
+    @Mock
+    private MockRepository mockRepository;
+
+    @InjectMocks
+    private MockService mockService;
 
     @Before
     public void setUp() {
@@ -45,4 +62,19 @@ public class CrewMemberTest {
         assertThat("다현",is(CrewmemberName));
         System.out.println("다현이는 신입생이다!");
     } //다현이가 신입생임을 확인하는 test
+
+    @Test
+    public void FakeObjectReturnTimes(){
+        //given
+        given(mockRepository.findByName("쯔위")).willReturn(new CrewMember("쯔위", "교육부장", 201502145));
+        given(mockRepository.findByName("사나")).willReturn(new CrewMember("사나", "신입생3", 201902423));
+        given(mockRepository.findByName("미나")).willReturn(new CrewMember("미나", "회원3", 201802411));
+        //when
+        CrewMember crewMember = mockService.findByNmae("쯔위");
+        CrewMember crewMember1 = mockService.findByNmae("사나");
+        //then
+        verify(mockRepository, atLeast(2)).findByName(anyString());
+        assertThat(crewMember.getName(),is("쯔위"));
+        assertThat(crewMember1.getName(), is("사나"));
+    }
 }
