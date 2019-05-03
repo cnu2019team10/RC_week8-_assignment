@@ -10,4 +10,6 @@ public abstract class MockRepository {
     abstract CrewMember updatePositionByName(String Name, String Position);
 
     public abstract void addCrewMember(CrewMember member);
+
+    public abstract void updateStudentIDByName(String Name, int StudentID);
 }

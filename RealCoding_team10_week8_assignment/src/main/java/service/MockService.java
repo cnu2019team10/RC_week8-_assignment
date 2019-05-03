@@ -16,13 +16,13 @@ public class MockService {
         return mockRepository.findAll();
     }
 
-    public CrewMember findByNmae(String name) { //
+    public CrewMember findByName(String name) { //
         CrewMember CM = mockRepository.findByName(name);
         return CM;
     }
 
     public CrewMember updatePositionByName(String name, String position){
-        CrewMember CM = findByNmae(name);
+        CrewMember CM = findByName(name);
         CM.setName(position);
         return CM;
     }
@@ -31,5 +31,10 @@ public class MockService {
         CrewMember addCM = new CrewMember(CM.getName(), CM.getPosition(), CM.getStudentID());
         mockRepository.addCrewMember(addCM);
         return;
+    }
+
+    public void updateStudentIDByName(String Name, int StudentID) {
+        CrewMember CM = findByName(Name);
+        CM.setStudentID(StudentID);
     }
 }
