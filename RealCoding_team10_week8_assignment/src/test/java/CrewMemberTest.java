@@ -13,7 +13,7 @@ import java.util.*;
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
 import static org.hamcrest.CoreMatchers.equalTo;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.Matchers.*;
 import static org.mockito.BDDMockito.*;
 import static org.mockito.Matchers.anyString;
@@ -23,6 +23,7 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class CrewMemberTest {
     private List<CrewMember> crewMemberList = new ArrayList<CrewMember>();
+    private List<String> MemberNames;
 
     @Mock
     private MockRepository mockRepository;
@@ -106,4 +107,15 @@ public class CrewMemberTest {
 
 
     }
+    @Test
+    public void shouldNewStudentIsMINA(){
+        // newStudent 추가
+        CrewMember newStudent = new CrewMember("미나", "신입생2", 201902043);
+        assertThat("미나", is(newStudent.getName()));
+        assertThat("신입생2", is(equalTo(newStudent.getPosition())));
+        assertThat(201902043, equalTo(newStudent.getStudentID()));
+        // newStudent의 Name, Position, StudentID 확인
+    }
+
+    
 }
