@@ -117,5 +117,12 @@ public class CrewMemberTest {
         // newStudent의 Name, Position, StudentID 확인
     }
 
-    
+    @Test
+    public void shouldHaveSomeStudentName(){
+        // Members Name으로 새로운 list생성
+        MemberNames = Arrays.asList("지효", "채영", "정연", "나연", "모모", "다현");
+        assertThat(MemberNames.get(0), hasToString("지효"));
+        assertFalse(MemberNames.get(0), equals("미나"));
+        //assertTrue(MemberNames.get(3), equals("나연"));
+    }
 }
